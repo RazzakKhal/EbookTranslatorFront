@@ -1,1 +1,16 @@
-<p>translator-main-page works!</p>
+<p-input
+  id="epub"
+  name="epub"
+  type="file"
+  accept=".epub"
+  placeholder="Insère le EBOOK"
+  (fileSelected)="onFileSelected($event)"
+></p-input>
+
+@if (file()) {
+  <p>Votre fichier {{ file()?.name | slice: 0 : 30 }} fait : {{ file()?.size }}</p>
+
+  @if (file()?.type !== 'application/epub+zip') {
+    <p>Votre fichier n'est pas au bon format, le format {{ file()?.type }} n'est pas accepté</p>
+  }
+}
