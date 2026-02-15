@@ -8,7 +8,7 @@ export class LoaderService {
   private readonly pendingCount = signal<number>(0);
 
   getLoading() {
-    return this.isLoading();
+    return this.isLoading;
   }
 
   addPending() {
@@ -16,6 +16,8 @@ export class LoaderService {
   }
 
   removePending() {
-    this.pendingCount.set(this.pendingCount() - 1);
+    if (this.pendingCount() > 0) {
+      this.pendingCount.set(this.pendingCount() - 1);
+    }
   }
 }
