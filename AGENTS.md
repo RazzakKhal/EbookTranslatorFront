@@ -53,3 +53,15 @@
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+## Style CSS
+
+src/
+styles.css
+
+    styles/
+     - tokens.css : variables CSS (--color-primary, --space-4, etc.).
+
+     - base.css : reset léger, typo, liens, focus.
+
+     - utilities.css : petites classes utilitaires maison.
