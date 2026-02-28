@@ -1,3 +1,13 @@
+<header class="app-header">
+  <h1 class="app-title">{{ title() }}</h1>
+
+  @if (authenticated()) {
+    <button type="button" class="auth-action" (click)="onLogout()">Se deconnecter</button>
+  } @else {
+    <button type="button" class="auth-action" (click)="onLogin()">Se connecter</button>
+  }
+</header>
+
 @if (loading()) {
   <p-loader></p-loader>
 }

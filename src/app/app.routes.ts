@@ -1,14 +1,20 @@
 import { Routes } from '@angular/router';
-import { TranslatorMainPage } from './features/translate/pages/translator-main-page/translator-main-page';
-import { LandingMainPage } from './features/landing/pages/landing-main-page/landing-main-page';
+import { canActivateAuth } from './shared/guards/keycloak-auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    component: LandingMainPage,
+    loadComponent: () =>
+      import('./features/landing/pages/landing-main-page/landing-main-page').then(
+        (m) => m.LandingMainPage,
+      ),
   },
   {
     path: 'translate',
-    component: TranslatorMainPage,
+    loadComponent: () =>
+      import('./features/translate/pages/translator-main-page/translator-main-page').then(
+        (m) => m.TranslatorMainPage,
+      ),
+    canActivate: [canActivateAuth],
   },
 ];
