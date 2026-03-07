@@ -17,4 +17,11 @@ export const routes: Routes = [
       ),
     canActivate: [canActivateAuth],
   },
+  {
+    path: 'sign-up',
+    loadComponent: () =>
+      import('./features/signup/pages/sign-up-main-page/sign-up-main-page').then(
+        (m) => m.SignUpMainPage,
+      ),
+  },
 ];
