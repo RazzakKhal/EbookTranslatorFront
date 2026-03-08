@@ -1,80 +1,5 @@
-<!-- Header -->
-<header class="page-header">
-  <div class="header-shell">
-    <a class="brand" routerLink="/">
-      <span class="brand__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" focusable="false">
-          <path
-            d="M12 2v8m4-4-4-4-4 4M4 16.5A2.5 2.5 0 0 1 6.5 14H7V9.5A4.5 4.5 0 0 1 11.5 5h1A4.5 4.5 0 0 1 17 9.5V14h.5A2.5 2.5 0 0 1 20 16.5v2A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5z"
-          />
-        </svg>
-      </span>
-      <span class="brand__text">EbookTranslator</span>
-    </a>
+<app-header-component></app-header-component>
 
-    <nav class="desktop-nav" aria-label="Navigation principale">
-      <a href="#workflow">Workflow</a>
-      <a href="#formats">Formats</a>
-      <a href="#security">Securite</a>
-    </nav>
-
-    <div class="desktop-actions">
-      <a class="header-link-button" routerLink="/">Accueil</a>
-      <a class="header-primary-button" routerLink="/sign-up">Creer un compte</a>
-    </div>
-
-    <button
-      #menuToggleButton
-      class="menu-toggle"
-      type="button"
-      aria-label="Ouvrir le menu"
-      aria-controls="mobile-menu"
-      [attr.aria-expanded]="isMobileMenuOpen()"
-      (click)="openMobileMenu()"
-    >
-      <svg viewBox="0 0 24 24" focusable="false">
-        <path d="M4 7h16M4 12h16M4 17h16" />
-      </svg>
-    </button>
-  </div>
-</header>
-
-@if (isMobileMenuOpen()) {
-  <div
-    id="mobile-menu"
-    class="mobile-menu"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Menu principal"
-  >
-    <div class="mobile-menu__header">
-      <span class="brand__text">EbookTranslator</span>
-      <button
-        #mobileMenuCloseButton
-        class="menu-close"
-        type="button"
-        aria-label="Fermer le menu"
-        (click)="closeMobileMenu()"
-      >
-        <svg viewBox="0 0 24 24" focusable="false">
-          <path d="M6 6 18 18M18 6 6 18" />
-        </svg>
-      </button>
-    </div>
-
-    <nav class="mobile-nav" aria-label="Navigation mobile">
-      <a href="#workflow" (click)="closeMobileMenu()">Workflow</a>
-      <a href="#formats" (click)="closeMobileMenu()">Formats</a>
-      <a href="#security" (click)="closeMobileMenu()">Securite</a>
-      <a class="mobile-primary-button" routerLink="/sign-up" (click)="closeMobileMenu()">
-        Creer un compte
-      </a>
-      <a class="mobile-secondary-button" routerLink="/" (click)="closeMobileMenu()">Accueil</a>
-    </nav>
-  </div>
-}
-
-<!-- Body -->
 <main class="translator-page">
   <section class="hero-section">
     <div class="hero-shell">
@@ -239,7 +164,4 @@
   </section>
 </main>
 
-<!-- Footer -->
-<footer class="page-footer">
-  <p>EbookTranslator. Interface de depot concue pour rapidite et clarte.</p>
-</footer>
+<app-footer-component></app-footer-component>
