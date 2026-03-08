@@ -7,13 +7,12 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { TranslateService } from '../../../../shared/services/api/translate-service';
 
 @Component({
   selector: 'app-translator-main-page',
-  imports: [RouterLink],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './translator-main-page.html',
   styleUrl: './translator-main-page.css',
@@ -22,13 +21,9 @@ export class TranslatorMainPage {
   private readonly translateService = inject(TranslateService);
 
   private readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
-  private readonly menuToggleButton = viewChild<ElementRef<HTMLButtonElement>>('menuToggleButton');
-  private readonly mobileMenuCloseButton =
-    viewChild<ElementRef<HTMLButtonElement>>('mobileMenuCloseButton');
 
   readonly file = signal<File | null>(null);
   readonly isDragActive = signal(false);
-  readonly isMobileMenuOpen = signal(false);
   readonly isSubmitting = signal(false);
   readonly requestMessage = signal<string | null>(null);
   readonly requestError = signal<string | null>(null);
@@ -98,16 +93,6 @@ export class TranslatorMainPage {
     this.requestMessage.set(null);
     this.requestError.set(null);
     this.fileInput().nativeElement.value = '';
-  }
-
-  openMobileMenu() {
-    this.isMobileMenuOpen.set(true);
-    setTimeout(() => this.mobileMenuCloseButton()?.nativeElement.focus());
-  }
-
-  closeMobileMenu() {
-    this.isMobileMenuOpen.set(false);
-    setTimeout(() => this.menuToggleButton()?.nativeElement.focus());
   }
 
   onSubmit() {

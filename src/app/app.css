@@ -1,26 +1,9 @@
-.app-header {
-  align-items: center;
+:host {
   display: flex;
-  justify-content: space-between;
-  padding: 1rem;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
-.app-title {
-  font-size: 1.25rem;
-  margin: 0;
-}
-
-.auth-action {
-  background: #0d6efd;
-  border: 1px solid #0d6efd;
-  border-radius: 0.5rem;
-  color: #fff;
-  cursor: pointer;
-  font: inherit;
-  padding: 0.5rem 0.875rem;
-}
-
-.auth-action:focus-visible {
-  outline: 2px solid #0b5ed7;
-  outline-offset: 2px;
+.app-content {
+  flex: 1 0 auto;
 }

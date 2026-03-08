@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
 import { TranslatorMainPage } from './translator-main-page';
@@ -12,6 +13,7 @@ describe('TranslatorMainPage', () => {
     await TestBed.configureTestingModule({
       imports: [TranslatorMainPage],
       providers: [
+        provideRouter([]),
         {
           provide: TranslateService,
           useValue: {
