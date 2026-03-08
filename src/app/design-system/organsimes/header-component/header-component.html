@@ -20,6 +20,9 @@
     <div class="desktop-actions">
       <a class="header-link-button" routerLink="/">Accueil</a>
       <a class="header-primary-button" routerLink="/sign-up">Creer un compte</a>
+      <button class="header-auth-button" type="button" (click)="onAuthAction()">
+        {{ authenticated() ? 'Se deconnecter' : 'Se connecter' }}
+      </button>
     </div>
 
     <button
@@ -69,6 +72,9 @@
         Creer un compte
       </a>
       <a class="mobile-secondary-button" routerLink="/" (click)="closeMobileMenu()">Accueil</a>
+      <button class="mobile-auth-button" type="button" (click)="onMobileAuthAction()">
+        {{ authenticated() ? 'Se deconnecter' : 'Se connecter' }}
+      </button>
     </nav>
   </div>
 }

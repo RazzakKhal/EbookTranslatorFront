@@ -8,13 +8,11 @@ import {
   viewChild,
 } from '@angular/core';
 import { finalize } from 'rxjs';
-import { FooterComponent } from '../../../../design-system/organsimes/footer-component/footer-component';
-import { HeaderComponent } from '../../../../design-system/organsimes/header-component/header-component';
 import { TranslateService } from '../../../../shared/services/api/translate-service';
 
 @Component({
   selector: 'app-translator-main-page',
-  imports: [HeaderComponent, FooterComponent],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './translator-main-page.html',
   styleUrl: './translator-main-page.css',

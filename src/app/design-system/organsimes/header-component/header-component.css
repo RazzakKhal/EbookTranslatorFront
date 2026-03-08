@@ -50,9 +50,11 @@
 .desktop-nav a:focus-visible,
 .header-link-button:focus-visible,
 .header-primary-button:focus-visible,
+.header-auth-button:focus-visible,
 .menu-toggle:focus-visible,
 .menu-close:focus-visible,
-.mobile-nav a:focus-visible {
+.mobile-nav a:focus-visible,
+.mobile-auth-button:focus-visible {
   outline: 3px solid rgb(91 124 250 / 0.25);
   outline-offset: 3px;
 }
@@ -98,8 +100,10 @@
 
 .header-link-button,
 .header-primary-button,
+.header-auth-button,
 .mobile-primary-button,
-.mobile-secondary-button {
+.mobile-secondary-button,
+.mobile-auth-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -111,14 +115,17 @@
 }
 
 .header-link-button,
-.mobile-secondary-button {
+.header-auth-button,
+.mobile-secondary-button,
+.mobile-auth-button {
   border: 1px solid transparent;
   color: var(--page-text-muted, #6b7280);
   background: transparent;
 }
 
 .header-link-button,
-.header-primary-button {
+.header-primary-button,
+.header-auth-button {
   min-height: 2.8rem;
   padding: 0 1.15rem;
   font-size: 0.95rem;
@@ -126,7 +133,9 @@
 }
 
 .header-link-button:hover,
-.mobile-secondary-button:hover {
+.header-auth-button:hover,
+.mobile-secondary-button:hover,
+.mobile-auth-button:hover {
   border-color: var(--page-border, #e6eaf2);
   color: var(--page-text, #1f2937);
 }
@@ -185,11 +194,13 @@
 }
 
 .mobile-primary-button,
-.mobile-secondary-button {
+.mobile-secondary-button,
+.mobile-auth-button {
   min-height: 3.25rem;
 }
 
-.mobile-secondary-button {
+.mobile-secondary-button,
+.mobile-auth-button {
   border: 1px solid var(--page-border, #e6eaf2);
 }
 
