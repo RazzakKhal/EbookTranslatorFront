@@ -1,18 +1,245 @@
-<p-input
-  id="epub"
-  name="epub"
-  type="file"
-  accept=".epub"
-  placeholder="Insère le EBOOK"
-  (fileSelected)="onFileSelected($event)"
-></p-input>
+<!-- Header -->
+<header class="page-header">
+  <div class="header-shell">
+    <a class="brand" routerLink="/">
+      <span class="brand__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path
+            d="M12 2v8m4-4-4-4-4 4M4 16.5A2.5 2.5 0 0 1 6.5 14H7V9.5A4.5 4.5 0 0 1 11.5 5h1A4.5 4.5 0 0 1 17 9.5V14h.5A2.5 2.5 0 0 1 20 16.5v2A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5z"
+          />
+        </svg>
+      </span>
+      <span class="brand__text">EbookTranslator</span>
+    </a>
 
-@if (file(); as file) {
-  <p>Votre fichier {{ file?.name | slice: 0 : 30 }} fait : {{ file?.size }}</p>
+    <nav class="desktop-nav" aria-label="Navigation principale">
+      <a href="#workflow">Workflow</a>
+      <a href="#formats">Formats</a>
+      <a href="#security">Securite</a>
+    </nav>
 
-  <button (click)="onSubmit()">Traduire</button>
+    <div class="desktop-actions">
+      <a class="header-link-button" routerLink="/">Accueil</a>
+      <a class="header-primary-button" routerLink="/sign-up">Creer un compte</a>
+    </div>
 
-  @if (file?.type !== epubType) {
-    <p>Votre fichier n'est pas au bon format, le format {{ file?.type }} n'est pas accepté</p>
-  }
+    <button
+      #menuToggleButton
+      class="menu-toggle"
+      type="button"
+      aria-label="Ouvrir le menu"
+      aria-controls="mobile-menu"
+      [attr.aria-expanded]="isMobileMenuOpen()"
+      (click)="openMobileMenu()"
+    >
+      <svg viewBox="0 0 24 24" focusable="false">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+@if (isMobileMenuOpen()) {
+  <div
+    id="mobile-menu"
+    class="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu principal"
+  >
+    <div class="mobile-menu__header">
+      <span class="brand__text">EbookTranslator</span>
+      <button
+        #mobileMenuCloseButton
+        class="menu-close"
+        type="button"
+        aria-label="Fermer le menu"
+        (click)="closeMobileMenu()"
+      >
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M6 6 18 18M18 6 6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="mobile-nav" aria-label="Navigation mobile">
+      <a href="#workflow" (click)="closeMobileMenu()">Workflow</a>
+      <a href="#formats" (click)="closeMobileMenu()">Formats</a>
+      <a href="#security" (click)="closeMobileMenu()">Securite</a>
+      <a class="mobile-primary-button" routerLink="/sign-up" (click)="closeMobileMenu()">
+        Creer un compte
+      </a>
+      <a class="mobile-secondary-button" routerLink="/" (click)="closeMobileMenu()">Accueil</a>
+    </nav>
+  </div>
 }
+
+<!-- Body -->
+<main class="translator-page">
+  <section class="hero-section">
+    <div class="hero-shell">
+      <div class="hero-copy">
+        <p class="hero-kicker">Traduction EPUB fluide</p>
+        <h1>
+          Deposez votre ebook
+          <span>et lancez la traduction instantanement</span>
+        </h1>
+        <p class="hero-description">
+          Une interface simple pour importer un fichier EPUB, verifier son format et demarrer
+          votre pipeline de traduction sans friction.
+        </p>
+      </div>
+
+      <section class="upload-card" aria-labelledby="translator-upload-title">
+        <h2 id="translator-upload-title" class="sr-only">Zone de depot du fichier EPUB</h2>
+
+        <input
+          #fileInput
+          class="sr-only"
+          type="file"
+          accept=".epub,application/epub+zip"
+          aria-describedby="upload-help upload-status"
+          (change)="onFileInputChange($event)"
+        />
+
+        <button
+          class="dropzone"
+          type="button"
+          [class.dropzone-active]="isDragActive()"
+          [class.dropzone-valid]="hasValidFile()"
+          (click)="openFilePicker()"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+        >
+          <span class="dropzone__icon" aria-hidden="true">
+            @if (hasValidFile()) {
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M20 7 9 18l-5-5" />
+              </svg>
+            } @else {
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path
+                  d="M7 17a4 4 0 0 1-.3-8H7a5 5 0 0 1 9.7 1.2A3.5 3.5 0 0 1 17.5 17H14"
+                />
+                <path d="M12 21V11m0 0-4 4m4-4 4 4" />
+              </svg>
+            }
+          </span>
+
+          <span class="dropzone__content">
+            <span class="dropzone__title">Glissez votre fichier EPUB ici</span>
+            <span class="dropzone__subtitle">
+              ou cliquez pour parcourir votre appareil
+            </span>
+          </span>
+        </button>
+
+        <button class="browse-button" type="button" (click)="openFilePicker()">
+          {{ ctaLabel() }}
+        </button>
+
+        <p id="upload-help" class="upload-help">
+          Format accepte: `.epub` uniquement. Un seul fichier a la fois.
+        </p>
+
+        <div id="upload-status" class="status-stack" aria-live="polite">
+          @if (validationMessage(); as validationMessage) {
+            <p class="status-message status-message--error">
+              {{ validationMessage }}
+            </p>
+          }
+
+          @if (requestMessage(); as requestMessage) {
+            <p class="status-message status-message--success">
+              {{ requestMessage }}
+            </p>
+          }
+
+          @if (requestError(); as requestError) {
+            <p class="status-message status-message--error">
+              {{ requestError }}
+            </p>
+          }
+        </div>
+
+        @if (file(); as file) {
+          <div class="file-panel">
+            <div class="file-panel__meta">
+              <span class="file-panel__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z" />
+                  <path d="M14 2v5h5" />
+                </svg>
+              </span>
+
+              <div>
+                <p class="file-panel__name">{{ file.name }}</p>
+                @if (fileSizeLabel(); as fileSizeLabel) {
+                  <p class="file-panel__details">{{ fileSizeLabel }}</p>
+                }
+              </div>
+            </div>
+
+            <div class="file-panel__actions">
+              <button class="ghost-button" type="button" (click)="clearFile()">Retirer</button>
+              <button
+                class="translate-button"
+                type="button"
+                [disabled]="!hasValidFile() || isSubmitting()"
+                (click)="onSubmit()"
+              >
+                {{ isSubmitting() ? 'Traduction...' : 'Traduire le fichier' }}
+              </button>
+            </div>
+          </div>
+        }
+      </section>
+    </div>
+  </section>
+
+  <section id="workflow" class="feature-strip" aria-label="Points forts">
+    <div class="feature-strip__item">
+      <span class="feature-strip__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="m12 2 8 4.5v11L12 22l-8-4.5v-11z" />
+          <path d="M12 12 4 7.5M12 12l8-4.5M12 12v10" />
+        </svg>
+      </span>
+      <div>
+        <p class="feature-strip__title">Flux simple</p>
+        <p class="feature-strip__text">Import, verification et lancement en quelques secondes.</p>
+      </div>
+    </div>
+
+    <div id="formats" class="feature-strip__item">
+      <span class="feature-strip__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M12 3v18M5 8h14M5 16h14" />
+        </svg>
+      </span>
+      <div>
+        <p class="feature-strip__title">Format controle</p>
+        <p class="feature-strip__text">Validation immediate pour eviter les envois invalides.</p>
+      </div>
+    </div>
+
+    <div id="security" class="feature-strip__item">
+      <span class="feature-strip__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M12 3 5 6v6c0 5 3.5 8 7 9 3.5-1 7-4 7-9V6z" />
+          <path d="m9.5 12 1.8 1.8 3.2-3.6" />
+        </svg>
+      </span>
+      <div>
+        <p class="feature-strip__title">Traitement securise</p>
+        <p class="feature-strip__text">Un point d'entree propre pour votre service de traduction.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="page-footer">
+  <p>EbookTranslator. Interface de depot concue pour rapidite et clarte.</p>
+</footer>
