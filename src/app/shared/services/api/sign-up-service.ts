@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class SignUpService {
   private readonly http = inject(HttpClient);
-  private readonly mainUrl = `${environment.apiUrl}/sign-up`;
+  private readonly mainUrl = `${environment.apiUrl}/auth/sign-up`;
 
   postSignUpForm(signUpForm: SignUpForm) {
     return this.http.post(this.mainUrl, signUpForm).pipe(take(1));
